@@ -212,14 +212,14 @@ function POPOp() {
         "if len(stack) == 0:",
         "    print('Underflow')",
         "else:",
-        "    item = stack.POP()",
+        "    item = stack.pop()",
         "    print(item)"
     ]);
 
     if (stack.length === 0) {
         document.getElementById("outputBox").innerText = "Underflow";
     } else {
-        let item = stack.POP();
+        let item = stack.pop();
         document.getElementById("outputBox").innerText = item;
     }
 
