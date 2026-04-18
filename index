@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Stack Operations Simulation</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    color: #232323;
+    text-align: center;
+    background: #f5f5f5;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 20px;
+}
+
+/* Code */
+.code {
+    text-align: left;
+    background: #fff;
+    padding: 10px;
+    border: 2px solid #232323;
+    width: 250px;
+    font-size: 14px;
+}
+
+.line {
+    padding: 4px;
+}
+
+.active {
+    background: #724b9e;
+    color: white;
+}
+
+/* Stack */
+.stack-box {
+    width: 180px;
+    height: 260px;
+    background: #e8d227;
+    border: 3px solid #232323;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    padding: 8px;
+}
+
+.block {
+    width: 110px;
+    height: 35px;
+    border: 2px solid #232323;
+    margin: 4px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+}
+
+.top {
+    background: #724b9e;
+    color: white;
+}
+
+/* Output */
+.output-box {
+    width: 200px;
+    height: 90px;
+    border: 3px solid #232323;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    margin-top: 10px;
+    padding: 5px;
+    text-align: center;
+}
+
+/* Length */
+.length-box {
+    margin-top: 8px;
+    font-weight: bold;
+}
+
+/* Buttons */
+.controls {
+    margin-top: 10px;
+}
+
+button {
+    margin: 6px;
+    padding: 8px 14px;
+    background: #724b9e;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+input {
+    padding: 5px;
+    margin: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<h2>Stack Operations Simulation</h2>
+
+<!-- Controls moved up -->
+<div class="controls">
+    Value: <input type="text" id="valueInput" placeholder="Enter value">
+    <br>
+    <button onclick="pushOp()">Push</button>
+    <button onclick="popOp()">Pop</button>
+    <button onclick="peekOp()">Peek</button>
+    <button onclick="sizeOp()">Size</button>
+    <button onclick="isEmptyOp()">isEmpty</button>
+    <button onclick="resetSim()">Refresh</button>
+</div>
+
+<div class="container">
+
+    <!-- Code -->
+    <div class="code" id="codeBox"></div>
+
+    <!-- Stack -->
+    <div>
+        <h3>Stack</h3>
+        <div class="stack-box" id="stackBox"></div>
+
+        <div class="length-box" id="lengthBox">
+            Length: 0 / 5
+        </div>
+
+        <div class="output-box" id="outputBox">--</div>
+    </div>
+
+</div>
+
+<script>
+let stack = [];
+let maxSize = 5;
+
+function renderStack() {
+    const box = document.getElementById('stackBox');
+    box.innerHTML = "";
+
+    stack.forEach((val, index) => {
+        let div = document.createElement('div');
+        div.className = "block";
+        div.innerText = val;
+
+        if (index === stack.length - 1) {
+            div.classList.add("top");
+        }
+
+        box.appendChild(div);
+    });
+
+    document.getElementById("lengthBox").innerText =
+        "Length: " + stack.length + " / 5";
+}
+
+function showCode(lines) {
+    const codeBox = document.getElementById("codeBox");
+    codeBox.innerHTML = "";
+
+    lines.forEach(line => {
+        let div = document.createElement("div");
+        div.className = "line active";
+        div.innerText = line;
+        codeBox.appendChild(div);
+    });
+}
+
+/* Push */
+function pushOp() {
+    let value = document.getElementById("valueInput").value;
+
+    showCode([
+        "if len(stack) == 5:",
+        "    print('Overflow')",
+        "else:",
+        "    stack.append(value)"
+    ]);
+
+    if (value === "") {
+        document.getElementById("outputBox").innerText = "Enter a value to push";
+        return;
+    }
+
+    if (stack.length === maxSize) {
+        document.getElementById("outputBox").innerText = "Overflow";
+    } else {
+        stack.push(value);
+        document.getElementById("outputBox").innerText = "Inserted: " + value;
+    }
+
+    document.getElementById("valueInput").value = "";
+    renderStack();
+}
+
+/* Pop */
+function popOp() {
+    showCode([
+        "if len(stack) == 0:",
+        "    print('Underflow')",
+        "else:",
+        "    item = stack.pop()",
+        "    print(item)"
+    ]);
+
+    if (stack.length === 0) {
+        document.getElementById("outputBox").innerText = "Underflow";
+    } else {
+        let item = stack.pop();
+        document.getElementById("outputBox").innerText = item;
+    }
+
+    renderStack();
+}
+
+/* Peek */
+function peekOp() {
+    showCode([
+        "if len(stack) == 0:",
+        "    print('Empty')",
+        "else:",
+        "    print(stack[-1])"
+    ]);
+
+    if (stack.length === 0) {
+        document.getElementById("outputBox").innerText = "Empty";
+    } else {
+        document.getElementById("outputBox").innerText =
+            stack[stack.length - 1];
+    }
+}
+
+/* Size */
+function sizeOp() {
+    showCode(["print(len(stack))"]);
+    document.getElementById("outputBox").innerText = stack.length;
+}
+
+/* isEmpty */
+function isEmptyOp() {
+    showCode([
+        "if len(stack) == 0:",
+        "    print(True)",
+        "else:",
+        "    print(False)"
+    ]);
+
+    document.getElementById("outputBox").innerText =
+        (stack.length === 0);
+}
+
+/* Reset */
+function resetSim() {
+    stack = [];
+    document.getElementById("outputBox").innerText = "--";
+    document.getElementById("valueInput").value = "";
+    document.getElementById("codeBox").innerHTML = "";
+    renderStack();
+}
+
+renderStack();
+</script>
+
+</body>
+</html>
