@@ -116,8 +116,8 @@ input {
 <div class="controls">
     Value: <input type="text" id="valueInput" placeholder="Enter value">
     <br>
-    <button onclick="pushOp()">Push</button>
-    <button onclick="popOp()">Pop</button>
+    <button onclick="PUSHOp()">PUSH</button>
+    <button onclick="POPOp()">POP</button>
     <button onclick="peekOp()">Peek</button>
     <button onclick="sizeOp()">Size</button>
     <button onclick="isEmptyOp()">isEmpty</button>
@@ -179,8 +179,8 @@ function showCode(lines) {
     });
 }
 
-/* Push */
-function pushOp() {
+/* PUSH */
+function PUSHOp() {
     let value = document.getElementById("valueInput").value;
 
     showCode([
@@ -191,14 +191,14 @@ function pushOp() {
     ]);
 
     if (value === "") {
-        document.getElementById("outputBox").innerText = "Enter a value to push";
+        document.getElementById("outputBox").innerText = "Enter a value to PUSH";
         return;
     }
 
     if (stack.length === maxSize) {
         document.getElementById("outputBox").innerText = "Overflow";
     } else {
-        stack.push(value);
+        stack.PUSH(value);
         document.getElementById("outputBox").innerText = "Inserted: " + value;
     }
 
@@ -206,20 +206,20 @@ function pushOp() {
     renderStack();
 }
 
-/* Pop */
-function popOp() {
+/* POP */
+function POPOp() {
     showCode([
         "if len(stack) == 0:",
         "    print('Underflow')",
         "else:",
-        "    item = stack.pop()",
+        "    item = stack.POP()",
         "    print(item)"
     ]);
 
     if (stack.length === 0) {
         document.getElementById("outputBox").innerText = "Underflow";
     } else {
-        let item = stack.pop();
+        let item = stack.POP();
         document.getElementById("outputBox").innerText = item;
     }
 
