@@ -198,7 +198,7 @@ function PUSHOp() {
     if (stack.length === maxSIZE) {
         document.getElementById("outputBox").innerText = "Overflow";
     } else {
-        stack.PUSH(value);
+        stack.push(value);
         document.getElementById("outputBox").innerText = "Inserted: " + value;
     }
 
