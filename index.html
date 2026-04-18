@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Stack Operations Simulation</title>
+<title>Stack operations simulation</title>
 
 <style>
 body {
-    font-family: Arial, sans-serif;
+    font-family: Outfit, sans-serif;
     color: #232323;
     text-align: center;
     background: #f5f5f5;
@@ -19,26 +19,22 @@ body {
     margin-top: 20px;
 }
 
-/* Code */
 .code {
     text-align: left;
     background: #fff;
     padding: 10px;
     border: 2px solid #232323;
-    width: 250px;
-    font-SIZE: 14px;
+    width: 260px;
+    font-size: 14px;
 }
 
 .line {
     padding: 4px;
-}
-
-.active {
     background: #724b9e;
     color: white;
+    margin-bottom: 2px;
 }
 
-/* Stack */
 .stack-box {
     width: 180px;
     height: 260px;
@@ -66,7 +62,6 @@ body {
     color: white;
 }
 
-/* Output */
 .output-box {
     width: 200px;
     height: 90px;
@@ -75,21 +70,14 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-SIZE: 16px;
     margin-top: 10px;
-    padding: 5px;
+    font-size: 16px;
     text-align: center;
 }
 
-/* Length */
 .length-box {
     margin-top: 8px;
     font-weight: bold;
-}
-
-/* Buttons */
-.controls {
-    margin-top: 10px;
 }
 
 button {
@@ -110,26 +98,23 @@ input {
 
 <body>
 
-<h2>Stack Operations Simulation</h2>
+<h2>Stack operations simulation</h2>
 
-<!-- Controls moved up -->
-<div class="controls">
+<div>
     Value: <input type="text" id="valueInput" placeholder="Enter value">
     <br>
     <button onclick="PUSHOp()">PUSH</button>
     <button onclick="POPOp()">POP</button>
     <button onclick="PEEKOp()">PEEK</button>
     <button onclick="SIZEOp()">SIZE</button>
-    <button onclick="isEmptyOp()">isEmpty</button>
+    <button onclick="ISEMPTYOp()">isEMPTY</button>
     <button onclick="resetSim()">Refresh</button>
 </div>
 
 <div class="container">
 
-    <!-- Code -->
     <div class="code" id="codeBox"></div>
 
-    <!-- Stack -->
     <div>
         <h3>Stack</h3>
         <div class="stack-box" id="stackBox"></div>
@@ -145,8 +130,9 @@ input {
 
 <script>
 let stack = [];
-let maxSIZE = 5;
+let maxSize = 5;
 
+/* Render stack */
 function renderStack() {
     const box = document.getElementById('stackBox');
     box.innerHTML = "";
@@ -167,13 +153,14 @@ function renderStack() {
         "Length: " + stack.length + " / 5";
 }
 
+/* Show code */
 function showCode(lines) {
     const codeBox = document.getElementById("codeBox");
     codeBox.innerHTML = "";
 
     lines.forEach(line => {
         let div = document.createElement("div");
-        div.className = "line active";
+        div.className = "line";
         div.innerText = line;
         codeBox.appendChild(div);
     });
@@ -191,14 +178,14 @@ function PUSHOp() {
     ]);
 
     if (value === "") {
-        document.getElementById("outputBox").innerText = "Enter a value to PUSH";
+        document.getElementById("outputBox").innerText = "Enter value first";
         return;
     }
 
-    if (stack.length === maxSIZE) {
+    if (stack.length === maxSize) {
         document.getElementById("outputBox").innerText = "Overflow";
     } else {
-        stack.push(value);
+        stack.push(value);   // ✅ correct
         document.getElementById("outputBox").innerText = "Inserted: " + value;
     }
 
@@ -219,8 +206,8 @@ function POPOp() {
     if (stack.length === 0) {
         document.getElementById("outputBox").innerText = "Underflow";
     } else {
-        let item = stack.pop();
-        document.getElementById("outputBox").innerText = item;
+        let item = stack.pop();   // ✅ correct
+        document.getElementById("outputBox").innerText = "Popped: " + item;
     }
 
     renderStack();
@@ -239,18 +226,19 @@ function PEEKOp() {
         document.getElementById("outputBox").innerText = "Empty";
     } else {
         document.getElementById("outputBox").innerText =
-            stack[stack.length - 1];
+            "Top: " + stack[stack.length - 1];
     }
 }
 
 /* SIZE */
 function SIZEOp() {
     showCode(["print(len(stack))"]);
-    document.getElementById("outputBox").innerText = stack.length;
+    document.getElementById("outputBox").innerText =
+        "Size: " + stack.length;
 }
 
-/* isEmpty */
-function isEmptyOp() {
+/* isEMPTY */
+function ISEMPTYOp() {
     showCode([
         "if len(stack) == 0:",
         "    print(True)",
@@ -259,7 +247,7 @@ function isEmptyOp() {
     ]);
 
     document.getElementById("outputBox").innerText =
-        (stack.length === 0);
+        (stack.length === 0) ? "True" : "False";
 }
 
 /* Reset */
