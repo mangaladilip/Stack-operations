@@ -26,7 +26,7 @@ body {
     padding: 10px;
     border: 2px solid #232323;
     width: 250px;
-    font-size: 14px;
+    font-SIZE: 14px;
 }
 
 .line {
@@ -75,7 +75,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
+    font-SIZE: 16px;
     margin-top: 10px;
     padding: 5px;
     text-align: center;
@@ -118,8 +118,8 @@ input {
     <br>
     <button onclick="PUSHOp()">PUSH</button>
     <button onclick="POPOp()">POP</button>
-    <button onclick="peekOp()">Peek</button>
-    <button onclick="sizeOp()">Size</button>
+    <button onclick="PEEKOp()">PEEK</button>
+    <button onclick="SIZEOp()">SIZE</button>
     <button onclick="isEmptyOp()">isEmpty</button>
     <button onclick="resetSim()">Refresh</button>
 </div>
@@ -145,7 +145,7 @@ input {
 
 <script>
 let stack = [];
-let maxSize = 5;
+let maxSIZE = 5;
 
 function renderStack() {
     const box = document.getElementById('stackBox');
@@ -195,7 +195,7 @@ function PUSHOp() {
         return;
     }
 
-    if (stack.length === maxSize) {
+    if (stack.length === maxSIZE) {
         document.getElementById("outputBox").innerText = "Overflow";
     } else {
         stack.PUSH(value);
@@ -226,8 +226,8 @@ function POPOp() {
     renderStack();
 }
 
-/* Peek */
-function peekOp() {
+/* PEEK */
+function PEEKOp() {
     showCode([
         "if len(stack) == 0:",
         "    print('Empty')",
@@ -243,8 +243,8 @@ function peekOp() {
     }
 }
 
-/* Size */
-function sizeOp() {
+/* SIZE */
+function SIZEOp() {
     showCode(["print(len(stack))"]);
     document.getElementById("outputBox").innerText = stack.length;
 }
